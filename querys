@@ -1,0 +1,61 @@
+<-- store manger details  quick scan about sroes managers who cant make adminstrators actions --> 
+
+select 
+ [DashboardExternalStores].cardcode as storeNum
+,[DashboardExternalStores].CardName as storeName
+,[DashboardExternalStores].Manager as storeManager
+,[DashboardExternalEmployees].CardName as managerName
+,[DashboardExternalEmployees].SocialId as managerPassword
+
+from [DashboardExternalStores] join
+ [DashboardExternalEmployees]
+
+on [DashboardExternalStores].Manager =      
+[DashboardExternalEmployees].CardCode
+
+where [DashboardExternalStores].cardcode = '(enter storeNum)'
+
+
+
+<----------------- check order full details -------------------->
+
+SELECT [StagedProccedure].[EntryID] as מזהה
+	    ,[StagedProccedure].[ExternalId] as מזההחיצוני
+	    ,[StagedProccedureStages].StageName as אבןדרך
+  FROM [StagedProccedure] join [StagedProccedureStages]
+
+  on [StagedProccedure].[EntryID] = [StagedProccedureStages].EntryID
+
+  where [MyBranch].[dbo].[StagedProccedure].[ExternalId] = '(enter externalID)'   
+  
+  
+ <-------------- comparing store SALES -------------->
+ 
+ORACLE 
+
+select sum (SACH_KOLL_MAM)
+from msmkim
+where TARIKH_RISHOM = 20220922 and CHNOT = 19
+
+ SSMS :
+
+SELECT sum ([DocTotalWithVAT]) 
+FROM [DashboardExternalInvoices]
+where StoreID = 19 and DocDate = '20220922'
+
+<-------------- comparing Items Sales------------->
+ORACLE :
+
+select count(*)
+from
+shorot_msmkim
+where KOD_PRIT = '888' and TARIKH between 20220801 and 20220831
+
+SSMS: 
+
+select count(*)
+from [DashboardExternalInvoiceLines]
+where ItemCode = '888' and docdate between 20220801 and 20220831  
+
+
+
